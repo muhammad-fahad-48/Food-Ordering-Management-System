@@ -44,6 +44,14 @@ const ICON_PATHS = {
   trash: `<path d="M4.5 7h15M9.5 7V4.8A1.3 1.3 0 0 1 10.8 3.5h2.4A1.3 1.3 0 0 1 14.5 4.8V7M18.5 7l-.8 12a2 2 0 0 1-2 1.9H8.3a2 2 0 0 1-2-1.9L5.5 7"/>`,
 };
 
+// Brand mark: a small route arriving at a pin — echoes the login illustration
+const BRAND_MARK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3.5 17c3.5-1 6-4 8-7.5" stroke-dasharray="0.5 3.2"/>
+  <circle cx="3.5" cy="17" r="1.1" fill="currentColor" stroke="none"/>
+  <path d="M16 3.2a3.6 3.6 0 0 1 3.6 3.6c0 2.6-3.6 6-3.6 6s-3.6-3.4-3.6-6A3.6 3.6 0 0 1 16 3.2z"/>
+  <circle cx="16" cy="6.8" r="1.15" fill="currentColor" stroke="none"/>
+</svg>`;
+
 function icon(name, size = 18) {
   const path = ICON_PATHS[name] || ICON_PATHS.grid;
   return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
