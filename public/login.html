@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Food Ordering Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+
+  <div class="login-shell">
+
+    <!-- Left: brand panel with illustration -->
+    <div class="login-panel">
+      <div class="login-panel-texture"></div>
+
+      <div class="login-panel-content">
+        <div class="brand login-brand">
+          <span class="brand-mark">FO</span>
+          <div>
+            <div class="brand-title">FoodOrder</div>
+            <div class="brand-sub">Admin Console</div>
+          </div>
+        </div>
+
+        <h1 class="login-slogan">From kitchen<br>to doorstep,<br>tracked end to end.</h1>
+        <p class="login-slogan-sub">Every customer, restaurant, order and delivery in your system — one console away.</p>
+      </div>
+
+      <svg class="login-illustration" viewBox="0 0 420 300" fill="none">
+        <circle cx="360" cy="40" r="90" stroke="#4A3E23" stroke-width="1"/>
+        <circle cx="360" cy="40" r="140" stroke="#332B1C" stroke-width="1"/>
+
+        <path d="M40 230 C 110 180, 150 250, 220 190 S 330 110, 380 90" stroke="#B98A2E" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+
+        <g>
+          <rect x="18" y="205" width="46" height="34" rx="5" fill="#1E222D" stroke="#B98A2E" stroke-width="1.2"/>
+          <path d="M18 218h46" stroke="#B98A2E" stroke-width="1"/>
+          <path d="M26 205l4-9h20l4 9" stroke="#B98A2E" stroke-width="1" fill="none"/>
+        </g>
+
+        <g>
+          <path d="M380 60 C380 80 364 95 364 95 C364 95 348 80 348 60 A16 16 0 0 1 380 60Z" fill="#1E222D" stroke="#B98A2E" stroke-width="1.2"/>
+          <circle cx="364" cy="59" r="6" fill="none" stroke="#B98A2E" stroke-width="1.2"/>
+        </g>
+
+        <circle cx="120" cy="211" r="3.4" fill="#B98A2E"/>
+        <circle cx="220" cy="190" r="3.4" fill="#B98A2E"/>
+        <circle cx="300" cy="130" r="3.4" fill="#B98A2E"/>
+      </svg>
+    </div>
+
+    <!-- Right: login form -->
+    <div class="login-form-side">
+      <div class="login-box">
+        <h2 class="login-title">Sign in</h2>
+        <p class="muted login-sub">Enter your admin credentials to continue.</p>
+
+        <form id="login-form" class="login-form">
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" required autocomplete="username">
+          </label>
+          <label class="form-field">
+            <span>Password</span>
+            <input type="password" name="password" required autocomplete="current-password">
+          </label>
+          <div id="login-error" class="login-error"></div>
+          <button type="submit" class="btn btn-primary login-btn">Sign in</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById('login-error');
+      errorEl.textContent = '';
+      const formData = new FormData(e.target);
+      const body = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+      };
+      try {
+        const res = await fetch('/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errorEl.textContent = data.message || 'Login failed';
+          return;
+        }
+        sessionStorage.setItem('admin', JSON.stringify(data.admin));
+        window.location.href = 'index.html';
+      } catch (err) {
+        errorEl.textContent = 'Could not reach the server.';
+      }
+    });
+  </script>
+</body>
+</html>
